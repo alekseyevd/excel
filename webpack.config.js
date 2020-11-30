@@ -45,9 +45,12 @@ module.exports = {
   },
   devtool: isDev ? 'source-map': false,
   devServer: {
+    contentBase: '../dist',
     port: 3000,
-    hot: isDev
+    open: isDev,
+    hot: true
   },
+  target: process.env.NODE_ENV === 'development' ? 'web' : 'browserslist',
   plugins: [
     new CleanWebpackPlugin(),
     new HTMLWebpackPlugin({
@@ -57,12 +60,14 @@ module.exports = {
         collapseWhitespace: isProd
       }
     }),
-    new CopyPlugin([
-      {
-        from: path.resolve(__dirname, 'src/favicon.ico'),
-        to: path.resolve(__dirname, 'dist')
-      }
-    ]),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'src/favicon.ico'),
+          to: path.resolve(__dirname, 'dist')
+        },
+      ]
+    }),
     new MiniCssExtractPlugin({
       filename: filename('css')
     }),
