@@ -1,5 +1,4 @@
-export class Component extends HTMLElement {
-  constructor() {
-    super()
-  }
-}
+import {App} from './core/App'
+
+const app = new App()
+app.start()
