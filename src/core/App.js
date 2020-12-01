@@ -17,22 +17,35 @@ export class App {
   }
 
   start() {
-    const routes = [
+    let routes = [
       {
-        path: 'fff',
-        module: ContentModule
+        path: '',
+        module: ContentModule,
+        template: Template
+      },
+      {
+        path: 'test',
+        component: CustomHtml,
+        template: Template
       }
     ]
 
-    const r = routes.reduce((acc, r) => {
-      const rs = r.module.routes
-      rs.map(route => {
-        route.path = r.path + route.path
-        return route
-      })
+    routes = routes.reduce((acc, r) => {
+      let rs
+      if (r.module) {
+        rs = r.module.routes
+        rs.map(route => {
+          route.path = r.path + route.path
+          route.template = r.template
+          return route
+        })
+      } else {
+        rs = r
+      }
+
       return acc.concat(rs)
     }, [])
-    console.log(r);
+    console.log(routes);
 
     new Template(this.partials)
   }
