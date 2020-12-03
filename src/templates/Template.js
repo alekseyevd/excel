@@ -25,7 +25,7 @@ export class Template {
 
     this.template = $template
 
-    document.querySelector('root-module')
+    document.querySelector('root')
         .append($template.content.cloneNode(true))
   }
 }
