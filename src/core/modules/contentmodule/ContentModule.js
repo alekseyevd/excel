@@ -11,4 +11,9 @@ export class ContentModule {
       component: CustomHtml
     }
   ]
+
+  static get itemView() {
+    return this.constructor.routes[0].component
+  }
 }
+
