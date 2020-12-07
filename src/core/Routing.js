@@ -12,6 +12,8 @@ export class Routing {
 
   init() {
     const route = this.findRoute()
+    this.root.clear()
+    this.root.insertAdjacentHTML('beforeend', route.template)
     route.render()
   }
 

@@ -30,6 +30,10 @@ export class MyApp extends HTMLElement {
   initRouting() {
     return new Routing(this)
   }
+
+  clear() {
+    this.innerHTML = ''
+  }
 }
 
 customElements.define('root-module', MyApp)

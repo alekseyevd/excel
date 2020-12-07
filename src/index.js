@@ -7,7 +7,7 @@ import {Template} from './templates/Template'
 
 
 const app = new MyApp()
-app.use('', new Route(Template, ContentModule))
+app.use('', new Route('<layout partial1 part2></layout>', ContentModule))
 app.use('test', new Route(Template, ContentModule))
 app.render()
 
