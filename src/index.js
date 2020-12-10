@@ -3,12 +3,13 @@
 import {ContentModule} from './core/modules/contentmodule/ContentModule'
 import {MyApp} from './core/RootModule'
 import {Route} from './core/Route'
-import {Template} from './templates/Template'
+import {Layout} from './templates/Layout'
+// import {Template} from './templates/Template'
 
 
 const app = new MyApp()
-app.use('', new Route('<layout partial1 part2></layout>', ContentModule))
-app.use('test', new Route(Template, ContentModule))
+app.use('', new Route(Layout, ContentModule))
+app.use('test', new Route(Layout, ContentModule))
 app.render()
 
 // const app = new App()

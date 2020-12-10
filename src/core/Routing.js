@@ -12,9 +12,25 @@ export class Routing {
 
   init() {
     const route = this.findRoute()
-    this.root.clear()
-    this.root.insertAdjacentHTML('beforeend', route.template)
-    route.render()
+
+    const Template = route.template
+
+    // this.template = route.template
+    if (this.shouldChangeTemlate(Template)) {
+      // удаляем старый, создаем новый layout (template)
+      this.root.clear()
+
+      this.template = new Template()
+      this.root.append(this.template)
+      route.render()
+    } else {
+      // если layout старый, то проверяем пропсы (partials)
+      console.log('old');
+    }
+  }
+
+  shouldChangeTemlate(Template) {
+    return !(this.template instanceof Template)
   }
 
   findRoute() {
