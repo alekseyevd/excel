@@ -1,14 +1,15 @@
-import {CustomHtml} from '../../components/customhtml/CustomHtml'
+import {ContentItemView} from './components/Item'
+import {ContentListView} from './components/List'
 
 export class ContentModule {
   static routes = [
     {
       path: '',
-      component: CustomHtml
+      component: ContentListView
     },
     {
       path: '/[id]',
-      component: CustomHtml
+      component: ContentItemView
     }
   ]
 

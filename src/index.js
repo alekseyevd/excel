@@ -1,6 +1,7 @@
 // import {App} from './core/App'
 // import {CustomHtml} from './core/components/customhtml/CustomHtml'
 import {ContentModule} from './core/modules/contentmodule/ContentModule'
+import {ExcelModule} from './core/modules/excel/ExcelModule'
 import {MyApp} from './core/RootModule'
 import {Route} from './core/Route'
 import {Layout} from './templates/Layout'
@@ -9,7 +10,7 @@ import {Layout} from './templates/Layout'
 
 const app = new MyApp()
 app.use('', new Route(Layout, ContentModule))
-app.use('test', new Route(Layout, ContentModule))
+app.use('excel', new Route(Layout, ExcelModule))
 app.render()
 
 // const app = new App()

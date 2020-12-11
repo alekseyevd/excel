@@ -6,7 +6,7 @@ export class Layout extends HTMLElement {
     return ['top', 'bottom'];
   }
 
-  constructor() {
+  constructor(Component) {
     super()
     const $template = document.createElement('template')
     if (typeof(tpl) === 'string') {
@@ -15,13 +15,18 @@ export class Layout extends HTMLElement {
       $template.innerHTML = tpl()
     } else $template.append(tpl)
 
-    // $template.content.querySelector('module').replaceWith()
-    this.append($template.content.cloneNode(true))
+    const module = $template.content.querySelector('module')
+    const el = new Component
+    module.append(el)
+    this.append($template.content)
+  }
+
+  renderModule(el) {
+    this.querySelector('module').firstChild.replaceWith(el)
   }
 
   connectedCallback() {
     console.log('connected')
-    this.querySelector()
   }
 
   attributeChangedCallback(name, oldValue, newValue) {

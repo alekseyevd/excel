@@ -14,18 +14,19 @@ export class Routing {
     const route = this.findRoute()
 
     const Template = route.template
+    const Module = route.module
 
     // this.template = route.template
     if (this.shouldChangeTemlate(Template)) {
       // удаляем старый, создаем новый layout (template)
       this.root.clear()
 
-      this.template = new Template()
+      this.template = new Template(Module)
       this.root.append(this.template)
-      route.render()
+      // route.render()
     } else {
       // если layout старый, то проверяем пропсы (partials)
-      console.log('old');
+      this.template.renderModule(new Module)
     }
   }
 
