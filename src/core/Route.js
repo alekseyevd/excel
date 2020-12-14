@@ -1,3 +1,5 @@
+import {Routing} from './Routing'
+
 export class Route {
   constructor(template, module) {
     this.template = template
@@ -20,6 +22,25 @@ export class Route {
 
   hasOwnRoutes() {
     return this.routes.length > 0
+  }
+
+  isActive() {
+    const r = this.path.split('/')
+    const p = Routing.path.split('/')
+    if (r.length !== p.length) return false
+
+    const params = {}
+    for (let i = 0; i < r.length; i++) {
+      if (r[i].startsWith('[') && r[i].endsWith(']')) {
+        const key = r[i].slice(1, -1)
+        params[key] = p[i]
+        continue
+      }
+      if (r[i] !== p[i]) return false
+    }
+
+    this.params = params
+    return true
   }
 
   render() {

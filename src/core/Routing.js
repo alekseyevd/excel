@@ -13,6 +13,7 @@ export class Routing {
   init() {
     const route = this.findRoute()
 
+    console.log(route.params);
     const Template = route.template
     const Module = route.module
 
@@ -35,7 +36,7 @@ export class Routing {
   }
 
   findRoute() {
-    return this.root.routes.find(route => route.path === Routing.path)
+    return this.root.routes.find(route => route.isActive())
   }
 
   get temlate() {

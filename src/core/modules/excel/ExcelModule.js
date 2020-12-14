@@ -1,4 +1,5 @@
 import {ExcelDashboardView} from './components/Dashboard';
+import {ExcelItemView} from './components/Excel';
 
 export class ExcelModule {
   static routes = [
@@ -8,7 +9,7 @@ export class ExcelModule {
     },
     {
       path: '/[id]',
-      component: 'dfg'
+      component: ExcelItemView
     }
   ]
 }

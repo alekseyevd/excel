@@ -13,7 +13,7 @@ export default function getExcelListFromStorage() {
             }
           })
       resolve(result)
-    }, 1500)
+    }, 1000)
   })
 }
 

@@ -11,5 +11,18 @@
     </div>
   </div>
 
-  <loader-component></loader-component>
+  <loader-component if="loading"></loader-component>
+  <div else class="db__table db__view">
+    <div class="db__list-header">
+      <span>Название</span>
+      <span>Дата открытия</span>
+    </div>
+    <ul class="db__list">
+      <li class="db__record" foreach="data">
+        <a href="#">{{item.title}}</a>
+        <strong></strong>
+      </li>
+    </ul>
+  </div>
+
 </div>
