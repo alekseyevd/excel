@@ -1,12 +1,14 @@
 export class ExcelItemView extends HTMLElement {
-  constructor() {
+  constructor(props) {
     super()
+    this.params = props.params
     this.render()
   }
 
   render() {
+    console.log(this.params);
     const template = document.createElement('template')
-    template.innerHTML = '<div>Это компонент item</div>'
+    template.innerHTML = `<div>Это компонент item c id ${this.params.id}</div>`
     if (this.template) {
       this.innerHTML = ''
     }

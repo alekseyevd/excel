@@ -13,7 +13,6 @@ export class Routing {
   init() {
     const route = this.findRoute()
 
-    console.log(route.params);
     const Template = route.template
     const Module = route.module
 
@@ -22,12 +21,17 @@ export class Routing {
       // удаляем старый, создаем новый layout (template)
       this.root.clear()
 
-      this.template = new Template(Module)
+      this.template = new Template({
+        module: Module,
+        params: route.params
+      })
       this.root.append(this.template)
       // route.render()
     } else {
       // если layout старый, то проверяем пропсы (partials)
-      this.template.renderModule(new Module)
+      this.template.renderModule(new Module({
+        params: route.params
+      }))
     }
   }
 

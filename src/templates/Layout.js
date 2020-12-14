@@ -6,8 +6,9 @@ export class Layout extends HTMLElement {
     return ['top', 'bottom'];
   }
 
-  constructor(Component) {
+  constructor(props) {
     super()
+    const Component = props.module
     const $template = document.createElement('template')
     if (typeof(tpl) === 'string') {
       $template.innerHTML = tpl
@@ -16,7 +17,9 @@ export class Layout extends HTMLElement {
     } else $template.append(tpl)
 
     const module = $template.content.querySelector('module')
-    const el = new Component
+    const el = new Component({
+      params: props.params
+    })
     module.append(el)
     this.append($template.content)
   }
