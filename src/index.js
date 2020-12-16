@@ -7,9 +7,12 @@ import {Route} from './core/Route'
 import {Layout} from './templates/Layout'
 // import {Template} from './templates/Template'
 
+const partials = {
+  top: 'Part top'
+}
 
 const app = new MyApp()
-app.use('', new Route(Layout, ContentModule))
+app.use('', new Route(Layout, ContentModule, partials))
 app.use('excel', new Route(Layout, ExcelModule))
 app.render()
 

@@ -1,10 +1,11 @@
 import {Routing} from './Routing'
 
 export class Route {
-  constructor(template, module) {
+  constructor(template, module, partials = []) {
     this.template = template
     this.module = module
     if (this.module.routes) this.routes = this.module.routes
+    this.partials = partials
   }
 
   use(path) {
