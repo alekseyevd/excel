@@ -10,6 +10,7 @@ export class Layout extends HTMLElement {
     super()
     const Component = props.module
     const $template = document.createElement('template')
+    this.__partials = props.partials
     if (typeof(tpl) === 'string') {
       $template.innerHTML = tpl
     } else if (_.isFunction(tpl)) {
@@ -21,6 +22,14 @@ export class Layout extends HTMLElement {
       params: props.params
     })
     module.append(el)
+
+    this.partials = {}
+    const partials = $template.content.querySelectorAll('partial')
+    Array.from(partials).forEach(partial => {
+      const key = partial.attributes['name'].value
+      this.partials[key] = partial
+      if (this.__partials[key]) this.setAttribute(key, '')
+    })
     this.append($template.content)
   }
 
@@ -33,7 +42,13 @@ export class Layout extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-
+    if (newValue === '') {
+      this.partials[name]
+          .innerHTML = this.__partials[name]
+    } else {
+      this.partials[name]
+          .innerHTML = ''
+    }
   }
 }
 

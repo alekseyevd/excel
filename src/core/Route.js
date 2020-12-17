@@ -1,7 +1,7 @@
 import {Routing} from './Routing'
 
 export class Route {
-  constructor(template, module, partials = []) {
+  constructor(template, module, partials) {
     this.template = template
     this.module = module
     if (this.module.routes) this.routes = this.module.routes
@@ -11,7 +11,7 @@ export class Route {
   use(path) {
     if (Array.isArray(this.routes)) {
       const routes = this.routes.map(r => {
-        const route = new Route(this.template, r.component)
+        const route = new Route(this.template, r.component, this.partials)
         // console.log(path + r.path);
         route.use(path + r.path)
         return route

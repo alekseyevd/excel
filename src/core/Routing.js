@@ -12,6 +12,7 @@ export class Routing {
 
   init() {
     const route = this.findRoute()
+    console.log(route);
 
     const Template = route.template
     const Module = route.module
@@ -23,7 +24,8 @@ export class Routing {
 
       this.template = new Template({
         module: Module,
-        params: route.params
+        params: route.params,
+        partials: route.partials
       })
       this.root.append(this.template)
       // route.render()
