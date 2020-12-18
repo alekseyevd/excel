@@ -1,11 +1,16 @@
-export class CustomHtml {
-  constructor(html) {
+export class CustomHtml extends HTMLElement {
+  constructor(tpl) {
+    super()
     const $template = document.createElement('template')
-    $template.innerHTML = html
-    this.template = $template
+    $template.innerHTML = tpl
+    this.append($template.content)
   }
 
-  get html() {
-    return this.template.content.cloneNode(true)
+  static create(props) {
+    return () => {
+      return new CustomHtml(props)
+    }
   }
 }
+
+customElements.define('custom-html', CustomHtml)

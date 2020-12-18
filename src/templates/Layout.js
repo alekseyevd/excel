@@ -1,5 +1,6 @@
 import tpl from './index.html'
 import _ from '../core/tools/_'
+import {CustomHtml} from '../core/components/customhtml/CustomHtml';
 
 export class Layout extends HTMLElement {
   static get observedAttributes() {
@@ -11,8 +12,8 @@ export class Layout extends HTMLElement {
     const Component = props.module
     const $template = document.createElement('template')
     this.__partials = {
-      top: '<div>top</div>',
-      bottom: '<div>bottom</div>'
+      top: CustomHtml.create('<div>top</div>'),
+      bottom: CustomHtml.create('<div>bottom</div>')
     }
     if (typeof(tpl) === 'string') {
       $template.innerHTML = tpl
@@ -55,7 +56,7 @@ export class Layout extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     if (newValue === '') {
       this.partials[name]
-          .innerHTML = this.__partials[name]
+          .append(this.__partials[name]())
     } else {
       this.partials[name]
           .innerHTML = ''
