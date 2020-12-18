@@ -9,11 +9,8 @@ import {Layout} from './templates/Layout'
 
 
 const app = new MyApp()
-app.use('', new Route(Layout, ContentModule, {
-  top: '<div>Top part</div>',
-  bottom: '<div>Bottom part</div>'
-}))
-app.use('excel', new Route(Layout, ExcelModule))
+app.use('', new Route(Layout, ContentModule, ['top', 'bottom']))
+app.use('excel', new Route(Layout, ExcelModule, ['top']))
 app.render()
 
 // const app = new App()

@@ -34,6 +34,7 @@ export class Routing {
       this.template.renderModule(new Module({
         params: route.params
       }))
+      this.template.renderPartials(route.partials)
     }
   }
 

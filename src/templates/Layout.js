@@ -10,7 +10,10 @@ export class Layout extends HTMLElement {
     super()
     const Component = props.module
     const $template = document.createElement('template')
-    this.__partials = props.partials
+    this.__partials = {
+      top: '<div>top</div>',
+      bottom: '<div>bottom</div>'
+    }
     if (typeof(tpl) === 'string') {
       $template.innerHTML = tpl
     } else if (_.isFunction(tpl)) {
@@ -28,9 +31,17 @@ export class Layout extends HTMLElement {
     Array.from(partials).forEach(partial => {
       const key = partial.attributes['name'].value
       this.partials[key] = partial
-      if (this.__partials[key]) this.setAttribute(key, '')
     })
+    this.renderPartials(props.partials)
     this.append($template.content)
+  }
+
+  renderPartials(keys) {
+    Object.keys(this.partials).forEach(key => {
+      if (keys.includes(key)) {
+        if (!this.hasAttribute(key)) this.setAttribute(key, '')
+      } else this.removeAttribute(key)
+    })
   }
 
   renderModule(el) {
