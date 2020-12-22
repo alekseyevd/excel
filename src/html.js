@@ -1,3 +1,4 @@
-export default function html(type, props, ...children) {
-  return {type, props, children}
+export default function html(Type, props, ...children) {
+  if (typeof Type === 'function') return new Type(props)
+  return {type: Type, props, children}
 }

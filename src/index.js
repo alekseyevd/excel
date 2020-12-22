@@ -17,14 +17,20 @@
 // app.start()
 
 
+// eslint-disable-next-line no-unused-vars
 import html from './html.js'
 
+function Custom(props) {
+  return <cstm pr="props">{props.text}</cstm>
+}
+
 function app() {
-  return <custom text="dfgfdg">
+  return <div text="dfgfdg">
+    <Custom text="test"/>
     <h1>Hello World</h1>
     hdfghfhd
     <div>test</div>
-  </custom>
+  </div>
 }
 console.log(app())
 
