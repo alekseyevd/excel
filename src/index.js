@@ -18,20 +18,20 @@
 
 
 // eslint-disable-next-line no-unused-vars
-import html from './html.js'
+import {html, el, updateElement} from './html.js'
 
+// eslint-disable-next-line no-unused-vars
 function Custom(props) {
-  return <cstm pr="props">{props.text}</cstm>
+  return <cstm pr="props" er="sdff">{props.text}</cstm>
 }
 
 function app() {
-  return <div text="dfgfdg">
+  return <div className="dfgfdg">
     <Custom text="test"/>
     <h1>Hello World</h1>
     hdfghfhd
     <div>test</div>
   </div>
 }
-console.log(app())
 
-
+updateElement(document.querySelector('root'), app())
