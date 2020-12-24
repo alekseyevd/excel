@@ -25,12 +25,31 @@ function Custom(props) {
   return <cstm pr="props" er="sdff">{props.text}</cstm>
 }
 
+function registerTag(type, Class) {
+  const f = (props) => {
+    return html(type, props)
+  }
+  Class.prototype.constructor.html = f
+  customElements.define(type, Class)
+}
+
+class El extends HTMLElement {
+  constructor(props) {
+    super()
+    console.log('props', props)
+  }
+
+  recieveProps(props) {}
+}
+registerTag('custom-element', El)
+
 function app() {
   return <div className="dfgfdg">
     <Custom text="test"/>
     <h1>Hello World</h1>
     hdfghfhd
     <div>test</div>
+    {El.html({text: 'test'})}
   </div>
 }
 

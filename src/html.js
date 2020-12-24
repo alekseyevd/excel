@@ -7,8 +7,15 @@ export function html(Type, props, ...children) {
 export function el(node) {
   if (typeof node === 'string') return document.createTextNode(node)
 
-  const $el = document.createElement(node.type)
-  setProps($el, node.props)
+  // to-do: check if node.type is custom HTMLElement
+  const CustomElement = customElements.get(node.type)
+  let $el
+  if (CustomElement) {
+    $el = new CustomElement(node.props)
+  } else {
+    $el = document.createElement(node.type)
+    setProps($el, node.props)
+  }
 
   node.children
       .map(el)
@@ -69,6 +76,7 @@ function isNodeChanged(newNode, oldNode) {
 }
 
 function updateProps($element, newProps, oldProps) {
+  // to-do check if $element is custom HTMLElement and can recieve props
   const props = {...newProps, ...oldProps}
   Object.keys(props).forEach(prop => {
     updateProp($element, prop, newProps[prop], oldProps[prop])
