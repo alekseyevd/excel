@@ -8,14 +8,16 @@ export function el(node) {
   if (typeof node === 'string') return document.createTextNode(node)
 
   // to-do: check if node.type is custom HTMLElement
-  const CustomElement = customElements.get(node.type)
-  let $el
-  if (CustomElement) {
-    $el = new CustomElement(node.props)
-  } else {
-    $el = document.createElement(node.type)
-    setProps($el, node.props)
-  }
+  // const CustomElement = customElements.get(node.type)
+  // let $el
+  // if (CustomElement) {
+  //   $el = new CustomElement(node.props)
+  // } else {
+  //   $el = document.createElement(node.type)
+  //   setProps($el, node.props)
+  // }
+  const $el = document.createElement(node.type)
+  setProps($el, node.props)
 
   node.children
       .map(el)
@@ -76,11 +78,12 @@ function isNodeChanged(newNode, oldNode) {
 }
 
 function updateProps($element, newProps, oldProps) {
-  // to-do check if $element is custom HTMLElement and can recieve props
   const props = {...newProps, ...oldProps}
   Object.keys(props).forEach(prop => {
     updateProp($element, prop, newProps[prop], oldProps[prop])
   })
+  // to-do check if $element is custom HTMLElement and can recieve props
+  // if ($element.shouldUpdate) $element.shouldUpdate()
 }
 
 function updateProp($element, prop, newValue, oldValue) {

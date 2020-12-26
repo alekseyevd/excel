@@ -34,9 +34,40 @@ function registerTag(type, Class) {
 }
 
 class El extends HTMLElement {
-  constructor(props) {
+  static get attributes() {
+    return {
+      text: String,
+      test: Number,
+      bool: Boolean
+    }
+  }
+
+  static get observedAttributes() {
+    return Object.keys(this.prototype.constructor.attributes)
+    // return ['text', 'test'];
+  }
+
+  constructor() {
     super()
-    console.log('props', props)
+    this.props = {}
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    // to-do Convert to attr type
+    // console.log(this.constructor.attributes);
+    const toType = this.constructor.attributes[name]
+    this.props[name] = toType(newValue)
+    setTimeout(() => {
+      if (!this.recivedAllProps) {
+        // to-do: render
+        console.log(this.props)
+        this.recivedAllProps = true
+      }
+    }, 0)
+  }
+
+  shouldUpdate() {
+    console.log(this.props);
   }
 
   recieveProps(props) {}
@@ -49,7 +80,8 @@ function app() {
     <h1>Hello World</h1>
     hdfghfhd
     <div>test</div>
-    {El.html({text: 'test'})}
+    {/* {El.html({text: 'test', test: '5'})} */}
+    <custom-element text="sfsdf" test="5" bool={true}></custom-element>
   </div>
 }
 
