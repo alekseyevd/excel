@@ -36,10 +36,10 @@ function registerTag(type, Class) {
 class El extends HTMLElement {
   static get attributes() {
     return {
-      text: String,
-      test: Number,
-      bool: Boolean,
-      json: Array
+      text: {type: String, default: '12345'},
+      test: {type: Number, default: 88},
+      bool: {type: Boolean, default: true},
+      json: {type: Array, default: ['hjk']}
     }
   }
 
@@ -50,21 +50,27 @@ class El extends HTMLElement {
 
   constructor() {
     super()
-    this.props = {}
+    // to-do - set initial state
+    const attributes = this.constructor.attributes
+    this.props = Object.keys(attributes).reduce((acc, name) => {
+      acc[name] = attributes[name].default
+      return acc
+    }, {})
+    console.log('def', {...this.props})
+    this.attributeChangedCallback('__init__')
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    // to-do Convert to attr type
-    // console.log(this.constructor.attributes);
-    const toType = this.constructor.attributes[name]
-    if (toType === Array) {
-      console.log(name, 'this is obj');
-    }
-    this.props[name] = toType(newValue)
+    const attr = this.constructor.attributes[name]
+    if (attr && (attr.type === Array || attr.type === Object)) {
+      this.props[name] = JSON.parse(newValue)
+    } else if (attr && attr.type === Boolean) {
+      this.props[name] = newValue === 'true'
+    } else if (attr !== undefined) this.props[name] = attr.type(newValue)
     setTimeout(() => {
       if (!this.recivedAllProps) {
         // to-do: render
-        console.log(this.props)
+        console.log('changed:', this.props)
         this.recivedAllProps = true
       }
     }, 0)
@@ -86,10 +92,9 @@ function app() {
     <div>test</div>
     {/* {El.html({text: 'test', test: '5'})} */}
     <custom-element
-      text="sfsdf"
       test="5"
-      bool={true}
-      json={{top: 'fsdff'}}
+      bool="false"
+      json={['sdf', 'sdfdsf']}
     ></custom-element>
   </div>
 }

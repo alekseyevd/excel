@@ -33,6 +33,7 @@ function setProps($el, props) {
 }
 
 function setProp($el, name, value) {
+  if (value instanceof Object) value = JSON.stringify(value)
   if (name === 'className') {
     $el.setAttribute('class', value)
   } else {
