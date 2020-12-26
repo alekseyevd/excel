@@ -38,7 +38,8 @@ class El extends HTMLElement {
     return {
       text: String,
       test: Number,
-      bool: Boolean
+      bool: Boolean,
+      json: Array
     }
   }
 
@@ -56,6 +57,9 @@ class El extends HTMLElement {
     // to-do Convert to attr type
     // console.log(this.constructor.attributes);
     const toType = this.constructor.attributes[name]
+    if (toType === Array) {
+      console.log(name, 'this is obj');
+    }
     this.props[name] = toType(newValue)
     setTimeout(() => {
       if (!this.recivedAllProps) {
@@ -81,7 +85,12 @@ function app() {
     hdfghfhd
     <div>test</div>
     {/* {El.html({text: 'test', test: '5'})} */}
-    <custom-element text="sfsdf" test="5" bool={true}></custom-element>
+    <custom-element
+      text="sfsdf"
+      test="5"
+      bool={true}
+      json={{top: 'fsdff'}}
+    ></custom-element>
   </div>
 }
 
