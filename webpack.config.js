@@ -18,7 +18,10 @@ const jsLoaders = () => {
         presets: ['@babel/preset-env'],
         plugins: [
           '@babel/plugin-proposal-class-properties',
-          ['@babel/plugin-transform-react-jsx', {'pragma': 'html'}]]
+          ['@babel/plugin-transform-react-jsx', {
+            'pragma': 'html',
+            'pragmaFrag': '"fragment"'
+          }]]
       }
     }
   ]
