@@ -1,4 +1,7 @@
 export function html(Type, props, ...children) {
+  if (Type.prototype instanceof HTMLElement) {
+    return Type.html(props)
+  }
   if (typeof Type === 'function') return new Type(props)
   return {type: Type, props: props || {}, children}
 }
@@ -15,7 +18,6 @@ export function el(node) {
     setProps($el, node.props)
   }
 
-  // to-do check if child is text node
   node.children
       .map(el)
       .forEach(child =>$el.appendChild(child))
@@ -47,13 +49,11 @@ function removeProp($el, name) {
 }
 
 export function updateElement($parent, newNode, oldNode, index = 0) {
-  if (!oldNode) {
+  if (oldNode === undefined) {
     $parent.appendChild(el(newNode))
-  } else if (!newNode) {
+  } else if (newNode === undefined) {
     $parent.removeChild($parent.childNodes[index])
   } else if (isNodeChanged(newNode, oldNode)) {
-    console.log(newNode, oldNode);
-    console.log($parent);
     $parent.replaceChild(el(newNode), $parent.childNodes[index])
   } else if (newNode.type) {
     updateProps($parent.childNodes[index], newNode.props, oldNode.props)
@@ -83,8 +83,6 @@ function updateProps($element, newProps, oldProps) {
   Object.keys(props).forEach(prop => {
     updateProp($element, prop, newProps[prop], oldProps[prop])
   })
-  // to-do check if $element is custom HTMLElement and can recieve props
-  // if ($element.shouldUpdate) $element.shouldUpdate()
 }
 
 function updateProp($element, prop, newValue, oldValue) {
@@ -94,3 +92,5 @@ function updateProp($element, prop, newValue, oldValue) {
     removeProp($element, prop)
   }
 }
+
+// to-do - addevent listeners

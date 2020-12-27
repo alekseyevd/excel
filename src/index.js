@@ -92,8 +92,8 @@ class El extends HTMLElement {
   }
 
   render() {
-    console.log('old:', this.__oldTemplate)
-    console.log('new', this.template())
+    // console.log('old:', this.__oldTemplate)
+    // console.log('new', this.template())
     updateElement(this, this.template(), this.__oldTemplate)
 
     this.__oldTemplate = {...this.template()}
@@ -103,10 +103,10 @@ class El extends HTMLElement {
   template() {
     const test = this.props.test
     return (
-      <div>
+      <>
         <div>{test} это кастом элемент</div>
         <div>dsfds</div>
-      </div>)
+      </>)
   }
 }
 registerTag('custom-element', El)
@@ -118,11 +118,11 @@ function app() {
     hdfghfhd
     <div>test</div>
     {/* {El.html({text: 'test', test: '5'})} */}
-    <custom-element
-      test="5"
+    <El
+      test="0"
       // bool="false"
-      json={['sdf', 'sdfdsf']}
-    ></custom-element>
+      // json={['sdf', 'sdfdsf']}
+    ></El>
   </div>
 }
 
