@@ -51,16 +51,18 @@ function removeProp($el, name) {
 export function updateElement($parent, newNode, oldNode, index = 0) {
   if (oldNode === undefined) {
     $parent.appendChild(el(newNode))
+    // to-do addeventlisteners to parent
   } else if (newNode === undefined) {
     $parent.removeChild($parent.childNodes[index])
   } else if (isNodeChanged(newNode, oldNode)) {
     $parent.replaceChild(el(newNode), $parent.childNodes[index])
   } else if (newNode.type) {
     updateProps($parent.childNodes[index], newNode.props, oldNode.props)
+
+    // to-do addEventListener
     const length = (newNode.children.length > oldNode.children.length)
         ? newNode.children.length
         : oldNode.children.length
-
     for (let i = 0; i < length; i++) {
       updateElement(
           newNode.type === 'fragment' ? $parent : $parent.childNodes[index],
