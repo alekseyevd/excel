@@ -6,7 +6,7 @@ export function html(Type, props, ...children) {
   return {type: Type, props: props || {}, children}
 }
 
-export function el(node) {
+export function el(node, dispatcher) {
   // if (typeof node === 'string') return document.createTextNode(node)
   if (!node.type) return document.createTextNode(node)
 
@@ -15,29 +15,39 @@ export function el(node) {
     $el = document.createDocumentFragment()
   } else {
     $el = document.createElement(node.type)
-    setProps($el, node.props)
+    setProps($el, node.props, dispatcher)
   }
 
   node.children
-      .map(el)
+      .map(child => el(child, dispatcher))
       .forEach(child =>$el.appendChild(child))
 
   return $el
 }
 
-function setProps($el, props) {
+function setProps($el, props, dispatcher) {
   Object.keys(props).forEach(name => {
-    setProp($el, name, props[name])
+    setProp($el, name, props[name], dispatcher)
   })
 }
 
-function setProp($el, name, value) {
-  if (value instanceof Object) value = JSON.stringify(value)
-  if (name === 'className') {
+function setProp($el, name, value, dispatcher) {
+  if (isEventProp(name)) {
+    dispatcher.subscribe(extractEventName(name), $el, value)
+  } else if (name === 'className') {
     $el.setAttribute('class', value)
   } else {
+    if (value instanceof Object) value = JSON.stringify(value)
     $el.setAttribute(name, value)
   }
+}
+
+function isEventProp(name) {
+  return /^on/.test(name);
+}
+
+function extractEventName(name) {
+  return name.slice(2).toLowerCase();
 }
 
 function removeProp($el, name) {
@@ -48,18 +58,20 @@ function removeProp($el, name) {
   }
 }
 
-export function updateElement($parent, newNode, oldNode, index = 0) {
+export function updateElement($parent, newNode, oldNode, index, dispatcher) {
   if (oldNode === undefined) {
-    $parent.appendChild(el(newNode))
-    // to-do addeventlisteners to parent
+    $parent.appendChild(el(newNode, dispatcher))
   } else if (newNode === undefined) {
+    // to-do remove eventListeners form dispatcher
     $parent.removeChild($parent.childNodes[index])
   } else if (isNodeChanged(newNode, oldNode)) {
-    $parent.replaceChild(el(newNode), $parent.childNodes[index])
+    // to-do remove eventListeners form dispatcher
+    $parent.replaceChild(el(newNode, dispatcher), $parent.childNodes[index])
   } else if (newNode.type) {
-    updateProps($parent.childNodes[index], newNode.props, oldNode.props)
+    updateProps(
+        $parent.childNodes[index],
+        newNode.props, oldNode.props, dispatcher)
 
-    // to-do addEventListener
     const length = (newNode.children.length > oldNode.children.length)
         ? newNode.children.length
         : oldNode.children.length
@@ -68,7 +80,8 @@ export function updateElement($parent, newNode, oldNode, index = 0) {
           newNode.type === 'fragment' ? $parent : $parent.childNodes[index],
           newNode.children[i],
           oldNode.children[i],
-          i
+          i,
+          dispatcher
       )
     }
   }
@@ -80,19 +93,19 @@ function isNodeChanged(newNode, oldNode) {
       newNode.type !== oldNode.type
 }
 
-function updateProps($element, newProps, oldProps) {
+function updateProps($element, newProps, oldProps, dispatcher) {
   const props = {...newProps, ...oldProps}
   Object.keys(props).forEach(prop => {
-    updateProp($element, prop, newProps[prop], oldProps[prop])
+    updateProp($element, prop, newProps[prop], oldProps[prop], dispatcher)
   })
 }
 
-function updateProp($element, prop, newValue, oldValue) {
-  if (!oldValue || (newValue !== oldValue)) {
-    setProp($element, prop, newValue)
+function updateProp($element, prop, newValue, oldValue, dispatcher) {
+  if (!oldValue || (newValue.toString() !== oldValue.toString())) {
+    console.log('update');
+    setProp($element, prop, newValue, dispatcher)
   } else if (!newValue) {
     removeProp($element, prop)
   }
 }
 
-// to-do - addevent listeners

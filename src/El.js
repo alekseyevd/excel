@@ -20,12 +20,8 @@ class El extends HTMLElement {
   constructor() {
     super()
     this.dispatcher = new EventEmitter()
-    this.listeners = ['click']
-    this.listeners.forEach(listener => {
-      this.addEventListener(listener, e => {
-        this.dispatcher.emit(e)
-      })
-    })
+    this._listeners = []
+
     // this.shadow = this.attachShadow({mode: 'open'})
     // set default props/attributes
 
@@ -69,12 +65,31 @@ class El extends HTMLElement {
   }
 
   render() {
-    // console.log('old:', this.__oldTemplate)
-    // console.log('new', this.template())
-    updateElement(this, this.template(), this.__oldTemplate)
+    updateElement(this, this.template(), this.__oldTemplate, 0, this.dispatcher)
+    this.addEventListeners()
 
     this.__oldTemplate = {...this.template()}
     this.shouldRender = false
+  }
+
+  addEventListeners() {
+    const listeners = this._listeners
+    Object.keys(this.dispatcher.listeners).forEach(eventName => {
+      if (!listeners.includes(eventName)) {
+        listeners.push(eventName)
+        this.addEventListener(eventName, e => {
+          this.dispatcher.emit(e)
+        })
+      }
+    })
+  }
+
+  // to-do function that change props/attributes
+
+  plus() {
+    const count = +this.getAttribute('test') + 1
+    // console.log(count++);
+    this.setAttribute('test', count)
   }
 
   template() {
@@ -83,7 +98,10 @@ class El extends HTMLElement {
       <>
         <div>{test} это кастом элемент</div>
         <div>dsfds</div>
-        <button>Click</button>
+        <input type="text" />
+        <button
+          onClick={(e) => console.log('clicked', e.target)}>Click</button>
+        <button onClick={() => this.plus()}>render</button>
       </>)
   }
 }
