@@ -34,6 +34,11 @@ export class EventEmitter {
     this.listeners[eventName] = this.listeners[eventName] || new Map()
     this.listeners[eventName].set($parent, fn)
   }
+
+  unSubscribe(eventName, $parent) {
+    this.listeners[eventName].delete($parent)
+    if (this.listeners[eventName].size === 0) delete this.listeners[eventName]
+  }
 }
 
 

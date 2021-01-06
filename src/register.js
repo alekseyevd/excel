@@ -8,10 +8,3 @@ export default function register(type, Class) {
   }
 }
 
-// function registerTag(type, Class) {
-//   const f = (props) => {
-//     return html(type, props)
-//   }
-//   Class.prototype.constructor.html = f
-//   customElements.define(type, Class)
-// }

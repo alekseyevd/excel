@@ -32,7 +32,6 @@ function app() {
     <h1>Hello World</h1>
     hdfghfhd
     <div>test</div>
-    {/* {El.html({text: 'test', test: '5'})} */}
     <Elem
       test="0"
       // bool="false"

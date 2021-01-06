@@ -1,9 +1,9 @@
-export function html(Type, props, ...children) {
-  if (Type.prototype instanceof HTMLElement) {
-    return Type.html(props)
-  }
-  if (typeof Type === 'function') return new Type(props)
-  return {type: Type, props: props || {}, children}
+export function html(type, props, ...children) {
+  // if (Type.prototype instanceof HTMLElement) {
+  //   return Type.html(props)
+  // }
+  if (typeof type === 'function') return type(props)
+  return {type: type, props: props || {}, children}
 }
 
 export function el(node, dispatcher) {
@@ -50,8 +50,11 @@ function extractEventName(name) {
   return name.slice(2).toLowerCase();
 }
 
-function removeProp($el, name) {
-  if (name === 'className') {
+function removeProp($el, name, dispatcher) {
+  // to-do remove event listeners
+  if (isEventProp(name)) {
+    dispatcher.unSubscribe(extractEventName(name), $el)
+  } else if (name === 'className') {
     $el.removeAttribute('class')
   } else {
     $el.removeAttribute(name)
@@ -63,9 +66,19 @@ export function updateElement($parent, newNode, oldNode, index, dispatcher) {
     $parent.appendChild(el(newNode, dispatcher))
   } else if (newNode === undefined) {
     // to-do remove eventListeners form dispatcher
-    $parent.removeChild($parent.childNodes[index])
+
+    const $elWillRemoved = $parent.childNodes[index]
+    setTimeout(() => {
+      $parent.removeChild($elWillRemoved)
+    }, 0)
   } else if (isNodeChanged(newNode, oldNode)) {
     // to-do remove eventListeners form dispatcher
+
+    if (oldNode.type && oldNode.type === 'fragment') {
+      while ($parent.childNodes.length !== 1) {
+        $parent.removeChild($parent.lastElementChild);
+      }
+    }
     $parent.replaceChild(el(newNode, dispatcher), $parent.childNodes[index])
   } else if (newNode.type) {
     updateProps(
@@ -105,7 +118,7 @@ function updateProp($element, prop, newValue, oldValue, dispatcher) {
     console.log('update');
     setProp($element, prop, newValue, dispatcher)
   } else if (!newValue) {
-    removeProp($element, prop)
+    removeProp($element, prop, dispatcher)
   }
 }
 
