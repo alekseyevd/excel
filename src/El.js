@@ -6,7 +6,7 @@ class El extends Component {
   static get attributes() {
     return {
       text: {type: String, default: '12345'},
-      test: {type: Number, default: 88},
+      test: {type: Number, default: 0},
       bool: {type: Boolean, default: true},
       json: {type: Array, default: ['hjk', 'sdfds']}
     }
@@ -20,7 +20,8 @@ class El extends Component {
   }
 
   plus() {
-    const count = +this.getAttribute('test') + 1
+    // console.log(this.props.test);
+    const count = this.props.test + 1
     // console.log(count++);
     this.setAttribute('test', count)
   }

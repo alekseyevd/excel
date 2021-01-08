@@ -19,6 +19,7 @@
 
 import {html, updateElement} from './html.js'
 import Elem from './El'
+import {Root} from './core/Root.js'
 
 // eslint-disable-next-line no-unused-vars
 function Custom(props) {
@@ -26,18 +27,5 @@ function Custom(props) {
 }
 
 
-function app() {
-  return <div className="dfgfdg">
-    <Custom text="test"/>
-    <h1>Hello World</h1>
-    hdfghfhd
-    <div>test</div>
-    <Elem
-      test="0"
-      // bool="false"
-      // json={['sdf', 'sdfdsf']}
-    ></Elem>
-  </div>
-}
-
-updateElement(document.querySelector('root'), app())
+// updateElement(document.querySelector('root'), app()
+document.body.prepend(new Root())

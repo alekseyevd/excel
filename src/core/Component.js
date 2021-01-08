@@ -4,7 +4,11 @@ import {EventEmitter} from '../EventEmitter'
 export class Component extends HTMLElement {
   static get observedAttributes() {
     // to-do throw error if static method attributes is not implemented
-    return Object.keys(this.prototype.constructor.attributes)
+    if (this.prototype.constructor.attributes) {
+      return Object.keys(this.prototype.constructor.attributes)
+    }
+
+    return []
   }
 
   constructor() {
@@ -14,7 +18,7 @@ export class Component extends HTMLElement {
 
     // this.shadow = this.attachShadow({mode: 'open'})
 
-    const attributes = this.constructor.attributes
+    const attributes = this.constructor.attributes || {}
     this.props = Object.keys(attributes).reduce((acc, name) => {
       acc[name] = attributes[name].default
       return acc
