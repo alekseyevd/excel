@@ -1,9 +1,9 @@
 import {html} from '../html'
 
-export default function Layout(props) {
+export default function Layout({partials}) {
   return (
     <div>
-      {props.top ? props.top() : ''}
+      {partials.top ? partials.top() : ''}
     </div>
   )
 }

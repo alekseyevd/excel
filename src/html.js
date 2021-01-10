@@ -4,7 +4,7 @@ export function html(type, props, ...children) {
   // }
   props = props ? props : {}
 
-  if (typeof type === 'function') return type(props)
+  if (typeof type === 'function') return type(props, children)
 
   return {type, props, children}
 }
