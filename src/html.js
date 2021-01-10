@@ -2,8 +2,11 @@ export function html(type, props, ...children) {
   // if (Type.prototype instanceof HTMLElement) {
   //   return Type.html(props)
   // }
+  props = props ? props : {}
+
   if (typeof type === 'function') return type(props)
-  return {type: type, props: props || {}, children}
+
+  return {type, props, children}
 }
 
 export function el(node, dispatcher) {

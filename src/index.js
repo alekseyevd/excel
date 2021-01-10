@@ -21,11 +21,6 @@ import {html, updateElement} from './html.js'
 import Elem from './El'
 import {Root} from './core/Root.js'
 
-// eslint-disable-next-line no-unused-vars
-function Custom(props) {
-  return <cstm pr="props" er="sdff">{props.text}</cstm>
-}
-
 
 // updateElement(document.querySelector('root'), app()
 document.body.prepend(new Root())
