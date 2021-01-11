@@ -1,6 +1,7 @@
 import {html} from './html'
 import register from './register'
 import {Component} from './core/Component'
+import {params} from './core/Params'
 
 class El extends Component {
   static get attributes() {
@@ -40,6 +41,10 @@ class El extends Component {
           onClick={(e) => console.log('clicked', e.target)}>Click</button>
         <button onClick={() => this.plus()}>render</button>
       </>)
+  }
+
+  connectedCallback() {
+    console.log('params', params);
   }
 }
 

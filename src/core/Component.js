@@ -51,10 +51,11 @@ export class Component extends HTMLElement {
   }
 
   render() {
-    updateElement(this, this.template(), this.__oldTemplate, 0, this.dispatcher)
+    const newTemplate = this.template()
+    updateElement(this, newTemplate, this.__oldTemplate, 0, this.dispatcher)
     this.updateEventListeners()
 
-    this.__oldTemplate = {...this.template()}
+    this.__oldTemplate = {...newTemplate}
     this.shouldRender = false
   }
 
