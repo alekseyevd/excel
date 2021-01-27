@@ -11,6 +11,7 @@ export function html(type, props, ...children) {
 
 export function el(node, dispatcher) {
   // if (typeof node === 'string') return document.createTextNode(node)
+  // if (node === null) return false
   if (!node.type) return document.createTextNode(node)
 
   let $el
@@ -23,7 +24,7 @@ export function el(node, dispatcher) {
 
   node.children
       .map(child => el(child, dispatcher))
-      .forEach(child =>$el.appendChild(child))
+      .forEach(child => $el.appendChild(child))
 
   return $el
 }

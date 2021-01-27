@@ -1,9 +1,14 @@
 import {html} from '../html'
 
-export default function Layout({partials}) {
+export default function Layout(props) {
+  console.log(props);
+  const Component = props.view
   return (
-    <div>
-      {partials.top ? partials.top() : ''}
-    </div>
+    <>
+      {props.top ? <div>top</div> : ''}
+      <div>
+        {props.view ? <Component /> : 'sdf'}
+      </div>
+    </>
   )
 }

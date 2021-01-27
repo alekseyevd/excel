@@ -23,10 +23,10 @@ export class Root extends Component {
     // )
 
     return (
-      <Switch>
-        <Route hash="" partials={this.partials} layout={Element} module/>
-        <Route hash="test" layout={Element}>
-          <Route hash="[id]" layout={Element} />
+      <Switch redirect={Element}>
+        <Route hash="" layout={Layout} partials={['top']} view={Element} />
+        <Route hash="test">
+          <Route hash="[id]" layout={Layout} />
         </Route>
       </Switch>
     )
@@ -50,13 +50,27 @@ function Switch(props, children, index = 0, params = {}) {
   if (route) {
     if (path[index + 1] !== undefined) {
       // eslint-disable-next-line new-cap
-      return Switch(null, route.children, index + 1, params)
+      return Switch(props, route.children, index + 1, params)
     } else {
       urlParams.set(params)
-      return route.layout()
+
+      if (!route.layout || route.layout === null) return props.redirect()
+
+      let layoutProps = {}
+      if (route.partials) {
+        layoutProps = route.partials.reduce((acc, value) => {
+          acc[value] = true
+          return acc
+        }, {
+          view: route.view
+        })
+      }
+      // console.log(route);
+      return route.layout(layoutProps)
     }
   } else {
     console.log('not found');
+    return props.redirect()
   }
 }
 
@@ -64,6 +78,8 @@ function Route(props, children) {
   return {
     hash: props.hash,
     layout: props.layout,
+    partials: props.partials || [],
+    view: props.view,
     children
   }
 }
