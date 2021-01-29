@@ -1,3 +1,5 @@
+import {params as urlParams} from './Params'
+
 export class Routing {
   static get path() {
     return window.location.hash.slice(1)
@@ -51,3 +53,55 @@ export class Routing {
   }
 }
 
+export function Switch(props, children, index = 0, params = {}) {
+  try {
+    const path = Routing.path.split('/')
+
+    const route = children.find(r => {
+      if (r.hash.startsWith('[') && r.hash.endsWith(']')) {
+        const key = r.hash.slice(1, -1)
+        params[key] = path[index]
+        return true
+      }
+      return r.hash === path[index]
+    })
+    if (route) {
+      if (path[index + 1] !== undefined) {
+        // eslint-disable-next-line new-cap
+        return Switch(props, route.children, index + 1, params)
+      } else {
+        urlParams.set(params)
+
+        if (!route.layout || route.layout === null) throw new Error()
+
+        let layoutProps = {}
+        if (route.partials) {
+          layoutProps = route.partials.reduce((acc, value) => {
+            acc[value] = true
+            return acc
+          }, {
+            view: route.view
+          })
+        }
+        // console.log(route);
+        return route.layout(layoutProps)
+      }
+    } else {
+      throw new Error()
+    }
+  } catch (e) {
+    window.location.hash = ''
+    return {type: ''}
+    // props.redirect()
+  }
+}
+
+export function Route(props, children) {
+  return {
+    hash: props.hash,
+    layout: props.layout,
+    partials: props.partials || [],
+    view: props.view,
+    children
+  }
+}
