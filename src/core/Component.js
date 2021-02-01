@@ -33,6 +33,11 @@ export class Component extends HTMLElement {
     return undefined
   }
 
+  setState(state) {
+    this.state = {...this.state, ...state}
+    this.render()
+  }
+
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue === newValue) return
 

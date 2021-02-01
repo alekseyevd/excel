@@ -5,9 +5,19 @@ export function html(type, props, ...children) {
 
   props = props ? props : {}
 
-  if (typeof type === 'function') return type(props, children)
+  // children = Array.isArray(children[0]) ? children[0] : children;
+  const _children = children.reduce((acc, value) => {
+    if (Array.isArray(value)) {
+      return acc.concat(value)
+    } else {
+      acc.push(value)
+      return acc
+    }
+  }, [])
 
-  return {type, props, children}
+  if (typeof type === 'function') return type(props, _children)
+
+  return {type, props, children: _children}
 }
 
 export function el(node, dispatcher) {

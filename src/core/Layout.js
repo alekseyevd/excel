@@ -11,18 +11,9 @@ export default function Layout(props) {
         ? <Navbar
           className=""/>
         : ''}
-      <div class="db__new">
-        <div class="db__view">
-          <a href="#" class="db__create">
-            Новая <br /> таблица
-          </a>
-        </div>
-      </div>
       <main className="mdl-layout__content">
         <div className="page-content">
           {props.view ? <Component /> : 'sdf'}
-        </div>
-        <div class="db__table db__view">
         </div>
       </main>
     </div>

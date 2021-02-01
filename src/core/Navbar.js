@@ -15,11 +15,6 @@ class Navbar extends Component {
     })
   }
 
-  setState(state) {
-    this.state = {...this.state, ...state}
-    this.render()
-  }
-
   template() {
     const styles = ['mdl-layout__drawer']
     if (this.state.opened) {

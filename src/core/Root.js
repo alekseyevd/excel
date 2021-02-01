@@ -3,6 +3,7 @@ import Element from '../El'
 import {html} from '../html'
 import Layout from './Layout'
 import {Switch, Route} from './Routing'
+import Dashboard from './components/Dashboard'
 // import Route from './Routing'
 
 export class Root extends Component {
@@ -16,9 +17,9 @@ export class Root extends Component {
   template() {
     return (
       <Switch redirect="" component={Element}>
-        <Route hash="" layout={Layout} partials={['top']} view={Element} />
+        <Route hash="" layout={Layout} partials={['top']} view={Dashboard} />
         <Route hash="test">
-          <Route hash="[id]" layout={Layout} partials={['top']}/>
+          <Route hash="[id]" layout={Layout} partials={['top']} view={Element}/>
         </Route>
       </Switch>
     )
