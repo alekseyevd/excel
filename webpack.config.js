@@ -50,10 +50,11 @@ module.exports = {
   },
   devtool: isDev ? 'source-map': false,
   devServer: {
-    contentBase: '../dist',
+    contentBase: path.join(__dirname, 'dist'),
     port: 3000,
     open: isDev,
-    hot: true
+    hot: true,
+    // historyApiFallback: true
   },
   target: process.env.NODE_ENV === 'development' ? 'web' : 'browserslist',
   plugins: [
@@ -87,10 +88,10 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: isDev,
-              reloadAll: true
-            }
+            // options: {
+            //   hmr: isDev,
+            //   reloadAll: true
+            // }
           },
           'css-loader',
           'sass-loader'

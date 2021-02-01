@@ -16,7 +16,7 @@
 // const app = new App()
 // app.start()
 
-
+import './scss/index.scss'
 import {html, updateElement} from './html.js'
 import Elem from './El'
 import {Root} from './core/Root.js'

@@ -18,7 +18,7 @@ export class Root extends Component {
       <Switch redirect="" component={Element}>
         <Route hash="" layout={Layout} partials={['top']} view={Element} />
         <Route hash="test">
-          <Route hash="[id]" layout={Layout} view={Element}/>
+          <Route hash="[id]" layout={Layout} partials={['top']}/>
         </Route>
       </Switch>
     )

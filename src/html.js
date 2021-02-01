@@ -2,6 +2,7 @@ export function html(type, props, ...children) {
   // if (Type.prototype instanceof HTMLElement) {
   //   return Type.html(props)
   // }
+
   props = props ? props : {}
 
   if (typeof type === 'function') return type(props, children)
@@ -11,7 +12,7 @@ export function html(type, props, ...children) {
 
 export function el(node, dispatcher) {
   // if (typeof node === 'string') return document.createTextNode(node)
-  // if (node === null) return false
+  // if (node === null) return
   if (!node.type) return document.createTextNode(node)
 
   let $el
@@ -119,7 +120,6 @@ function updateProps($element, newProps, oldProps, dispatcher) {
 
 function updateProp($element, prop, newValue, oldValue, dispatcher) {
   if (!oldValue || (newValue.toString() !== oldValue.toString())) {
-    console.log('update');
     setProp($element, prop, newValue, dispatcher)
   } else if (!newValue) {
     removeProp($element, prop, dispatcher)

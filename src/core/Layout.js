@@ -1,14 +1,30 @@
 import {html} from '../html'
+import Navbar from './Navbar';
 
 export default function Layout(props) {
   console.log(props);
   const Component = props.view
+
   return (
-    <>
-      {props.top ? <div>top</div> : ''}
-      <div>
-        {props.view ? <Component /> : 'sdf'}
+    <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      {props.top
+        ? <Navbar
+          className=""/>
+        : ''}
+      <div class="db__new">
+        <div class="db__view">
+          <a href="#" class="db__create">
+            Новая <br /> таблица
+          </a>
+        </div>
       </div>
-    </>
+      <main className="mdl-layout__content">
+        <div className="page-content">
+          {props.view ? <Component /> : 'sdf'}
+        </div>
+        <div class="db__table db__view">
+        </div>
+      </main>
+    </div>
   )
 }
