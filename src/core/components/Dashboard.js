@@ -1,5 +1,5 @@
-import {html} from '../../html'
-import register from '../../register'
+import {html} from '@/html'
+import register from '@/register'
 import {Component} from '@core/Component.js'
 
 class Dashboard extends Component {
@@ -42,7 +42,7 @@ class Dashboard extends Component {
               this.state.list.map(el => {
                 return (
                   <li class="db__record">
-                    <a href="#">{el.title}</a>
+                    <a href={`#test/${el.hash}`}>{el.title}</a>
                     <strong>{new Date(el.date).toLocaleDateString()}</strong>
                   </li>
                 )
@@ -56,3 +56,4 @@ class Dashboard extends Component {
 }
 
 export default register('dashboard-component', Dashboard)
+

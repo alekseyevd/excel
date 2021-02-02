@@ -4,6 +4,7 @@ import {html} from '../html'
 import Layout from './Layout'
 import {Switch, Route} from './Routing'
 import Dashboard from './components/Dashboard'
+import Excel from './components/Excel'
 // import Route from './Routing'
 
 export class Root extends Component {
@@ -19,7 +20,7 @@ export class Root extends Component {
       <Switch redirect="" component={Element}>
         <Route hash="" layout={Layout} partials={['top']} view={Dashboard} />
         <Route hash="test">
-          <Route hash="[id]" layout={Layout} partials={['top']} view={Element}/>
+          <Route hash="[id]" layout={Layout} partials={['top']} view={Excel}/>
         </Route>
       </Switch>
     )
