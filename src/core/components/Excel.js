@@ -40,6 +40,19 @@ class Excel extends Component {
     }
   }
 
+  buttonClickHandler(i) {
+    const buttons = [...this.state.buttons]
+    if (i > 2) {
+      buttons[i].active = !buttons[i].active
+    } else {
+      for (let j = 0; j < 3 && j !== i; j++) {
+        buttons[j].active = false
+      }
+      buttons[i].active = !buttons[i].active
+    }
+    this.setState({buttons})
+  }
+
   template() {
     return (
       <>
@@ -57,12 +70,13 @@ class Excel extends Component {
         </div>
         <div class="excel__toolbar">
           {
-            this.state.buttons.map(button => {
+            this.state.buttons.map((button, i) => {
               const styles = ['button']
               if (button.active) styles.push('active')
               return (
                 <div class={styles.join(' ')}>
-                  <i class="material-icons">{button.icon}</i>
+                  <i class="material-icons"
+                    onClick={()=>this.buttonClickHandler(i)}>{button.icon}</i>
                 </div>
               )
             })
