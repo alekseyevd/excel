@@ -9,8 +9,8 @@ function toChar(_, index) {
   return String.fromCharCode(CODES.A + index)
 }
 
-export default function Thead() {
-  const colsCount = CODES.Z - CODES.A + 1
+export default function Thead({colsCount}) {
+  // const colsCount = CODES.Z - CODES.A + 1
   const ths = new Array(colsCount + 1)
       .fill('')
       .map((_, index) => {

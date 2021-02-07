@@ -1,6 +1,7 @@
 import {html} from '@/html'
 import register from '@/register'
 import {Component} from '@core/Component.js'
+import Tbody from './Tbody'
 import Thead from './Thead'
 
 class Excel extends Component {
@@ -99,7 +100,7 @@ class Excel extends Component {
           <table>
             <thead>
               <tr>
-                <Thead />
+                <Thead colsCount={35} />
                 {/* <th></th>
                 <th className="column" >1</th>
                 <th className="column" >2</th>
@@ -107,34 +108,7 @@ class Excel extends Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th
-                  data-type="resizable"
-                  data-row="${index}"
-                  className="row-info"
-                >
-                  1
-                  <div class="row-resize" data-resize="row"></div>
-                </th>
-                <td
-                  class="cell"
-                  data-type="cell"
-                  contenteditable
-                >
-                </td>
-                <td
-                  class="cell"
-                  data-type="cell"
-                  contenteditable
-                >
-                </td>
-                <td
-                  class="cell"
-                  data-type="cell"
-                  contenteditable
-                >
-                </td>
-              </tr>
+              <Tbody colsCount={35} rowsCount={10} />
             </tbody>
           </table>
         </div>
