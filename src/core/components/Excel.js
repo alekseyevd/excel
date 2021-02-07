@@ -1,8 +1,17 @@
 import {html} from '@/html'
 import register from '@/register'
 import {Component} from '@core/Component.js'
+import Thead from './Thead'
 
 class Excel extends Component {
+  constructor() {
+    super()
+    this.codes = {
+      A: 65,
+      Z: 90
+    }
+  }
+
   initState() {
     return {
       buttons: [
@@ -81,6 +90,53 @@ class Excel extends Component {
               )
             })
           }
+        </div>
+        <div class="excel__formula">
+          <div class="info">fx</div>
+          <div class="input" contenteditable spellcheck="f"></div>
+        </div>
+        <div class="excel__table">
+          <table>
+            <thead>
+              <tr>
+                <Thead />
+                {/* <th></th>
+                <th className="column" >1</th>
+                <th className="column" >2</th>
+                <th className="column" >3</th> */}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th
+                  data-type="resizable"
+                  data-row="${index}"
+                  className="row-info"
+                >
+                  1
+                  <div class="row-resize" data-resize="row"></div>
+                </th>
+                <td
+                  class="cell"
+                  data-type="cell"
+                  contenteditable
+                >
+                </td>
+                <td
+                  class="cell"
+                  data-type="cell"
+                  contenteditable
+                >
+                </td>
+                <td
+                  class="cell"
+                  data-type="cell"
+                  contenteditable
+                >
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </>
     )
