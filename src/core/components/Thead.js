@@ -9,7 +9,7 @@ function toChar(_, index) {
   return String.fromCharCode(CODES.A + index)
 }
 
-export default function Thead({colsCount}) {
+export default function Thead({colsCount, resize}) {
   // const colsCount = CODES.Z - CODES.A + 1
   const ths = new Array(colsCount + 1)
       .fill('')
@@ -17,7 +17,7 @@ export default function Thead({colsCount}) {
         // const width = getWidth(index - 1, state)
         if (index === 0) {
           return (
-            <th></th>
+            <th className="column"></th>
           )
         } else {
           return (
@@ -28,7 +28,9 @@ export default function Thead({colsCount}) {
               style="min-width: 250px;"
             >
               {toChar(_, index - 1)}
-              <div class="col-resize" data-resize="col"></div>
+              <div class="col-resize" data-resize="col"
+                onMousedown={(e) => resize(e)} >
+              </div>
             </th>
           )
         }

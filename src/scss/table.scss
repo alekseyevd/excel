@@ -64,7 +64,9 @@
   }
 
   .column {
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 10;
     // display: flex;
     // justify-content: center;
     // align-items: center;   
@@ -130,6 +132,18 @@
 
     &:hover {
       cursor: row-resize;
+    }
+  }
+
+  tbody {
+    th {
+      position: sticky;
+      left: 0;
+      z-index: 5;
+      background: #f8f9fa;
+      border: 1px solid #c0c0c0;
+      border-top: 0;
+      border-left: 0;
     }
   }
 }

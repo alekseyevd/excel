@@ -3,6 +3,7 @@ import register from '@/register'
 import {Component} from '@core/Component.js'
 import Tbody from './Tbody'
 import Thead from './Thead'
+import resizeHandler from './resize'
 
 class Excel extends Component {
   constructor() {
@@ -63,6 +64,16 @@ class Excel extends Component {
     this.setState({buttons})
   }
 
+  async resizeTable(event) {
+    try {
+      const data = await resizeHandler(event)
+      console.log(data);
+      // this.$dispatch(actions.tableResize(data))
+    } catch (error) {
+      console.warn(error.message);
+    }
+  }
+
   template() {
     return (
       <>
@@ -100,11 +111,7 @@ class Excel extends Component {
           <table>
             <thead>
               <tr>
-                <Thead colsCount={35} />
-                {/* <th></th>
-                <th className="column" >1</th>
-                <th className="column" >2</th>
-                <th className="column" >3</th> */}
+                <Thead colsCount={35} resize={this.resizeTable}/>
               </tr>
             </thead>
             <tbody>
